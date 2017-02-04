@@ -260,8 +260,8 @@ impl<T: Read+Write> Client<T> {
 
 		while !found_tag_line {
 			let raw_data = try!(self.readline());
-			let line = String::from_utf8(raw_data).unwrap();
-			lines.push(line.clone());
+			let line = String::from_utf8_lossy(&raw_data);
+			lines.push(line.clone().into());
 			if (&*line).starts_with(&*start_str) {
 				found_tag_line = true;
 			}
